@@ -4,6 +4,7 @@ export const Const: {[key: string]: any} = {
     ENDPOINT: {
       MAP: '/v1/cryptocurrency/map', // 暗号通貨のIDリスト
       PRICE: '/v2/cryptocurrency/quotes/latest', // 最新市場価格（idカンマ区切り指定）
+      INFO: '/v2/cryptocurrency/info', // 通貨のメタ情報（idカンマ区切り指定）
     }
   },
 };
