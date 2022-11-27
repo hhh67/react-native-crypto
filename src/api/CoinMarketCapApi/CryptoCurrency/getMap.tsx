@@ -1,7 +1,7 @@
-import { Const } from '../../const';
-import { Env } from '../../env';
+import { Const } from '../../../const';
+import { Env } from '../../../env';
 
-export async function cryptocurrencyMap(
+export async function getMap(
   limit: number,
   listing_status?: 'active'|'inactive'|'untracked',
   start?: number,
