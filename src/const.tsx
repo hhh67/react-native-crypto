@@ -2,7 +2,8 @@ export const Const: {[key: string]: any} = {
   COINMARKETCAP: {
     BASE_URL: 'https://pro-api.coinmarketcap.com',
     ENDPOINT: {
-      MAP: '/v1/cryptocurrency/map',
+      MAP: '/v1/cryptocurrency/map', // 暗号通貨のIDリスト
+      PRICE: '/v2/cryptocurrency/quotes/latest', // 最新市場価格（idカンマ区切り指定）
     }
   },
 };
