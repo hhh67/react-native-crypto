@@ -1,6 +1,6 @@
 export const Const: {[key: string]: any} = {
   COINMARKETCAP: {
-    BASE_URL: 'https://sandbox-api.coinmarketcap.com',
+    BASE_URL: 'https://pro-api.coinmarketcap.com',
     ENDPOINT: {
       MAP: '/v1/cryptocurrency/map',
     }
