@@ -1,13 +1,16 @@
-import { Center, ScrollView } from 'native-base';
+import { Box, Center, ScrollView } from 'native-base';
 import React, { FC, useState } from 'react';
 import { useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import LogoIcon from '../components/atoms/LogoIcon';
+import LogoSymbol from '../components/molecules/LogoSymbol';
 import { fetchCryptoInfo } from '../components/stores/slices/CryptoInfo';
+import { fetchCryptoMap } from '../components/stores/slices/CryptoMap';
 import { fetchCryptoPrice } from '../components/stores/slices/CryptoPrice';
 import { AppDispatch, RootState } from '../components/stores/store';
-import { ConsoleBlue, ConsoleCyan, ConsoleMagenta, ConsoleRed } from '../const';
+import { ConsoleBlue, ConsoleCyan, ConsoleGreen, ConsoleMagenta, ConsoleRed, ConsoleYellow } from '../const';
 
 const styles = StyleSheet.create({
   errorContentView: {
@@ -48,54 +51,47 @@ const CryptoListScreen: FC = () => {
     is_error_crypto_info,
   } = useSelector((state: RootState) => state.crypto_info);
 
-  // todo: map APIの結果を使用してid_listを生成し、価格とメタ情報を取得する。
-  // 非同期処理を使用しているとid_listを正常に生成できない。
-  const id_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  useEffect(() => {
+    const API = async () => {
+      await dispatch(fetchCryptoMap(25));
+    };
+    
+    API();
+  }, []);
+    
+  let id_list: number[] = [];
+  crypto_map_data.forEach(function(data: any) {
+    id_list.push(data.id);
+  });
 
   useEffect(() => {
-    async function API() {
-      ConsoleBlue('api start');
-
+    ConsoleBlue(id_list);
+    const API = async () => {
       await dispatch(fetchCryptoPrice(id_list));
-      if (is_error_crypto_price) {
-        setErrorMessage('価格取得時にエラーが発生しました。');
-        console.log('価格エラー');
-        return;
-      }
       await dispatch(fetchCryptoInfo(id_list));
-      if (is_error_crypto_info) {
-        setErrorMessage('情報取得時にエラーが発生しました。');
-        console.log('情報エラー');
-        return;
-      }
+    };
 
-      ConsoleRed('api end');
-    }
-    // 起動時実行
     API();
-    // 1分ごとに更新
-    setInterval(() => {
-      API();
-    }, 60000);
   }, [
-    dispatch
+    id_list.length
   ]);
 
-  const CryptoList: FC = () => {
-    for (let key in crypto_price_data) {
-      if ((crypto_price_data[key] as any).id !== (crypto_info_data[key] as any).id) break;
-
-      ConsoleCyan(JSON.stringify(crypto_price_data[key]));
-    } 
-    for (let key in crypto_info_data) {
-      ConsoleMagenta(JSON.stringify(crypto_info_data[key]));
-    }
-
-    return (
-      <ScrollView>
-      </ScrollView>
+  const Cards: any[] = [];
+  id_list.forEach(function (id: any) {
+    Cards.push(
+      <Box
+        marginBottom={8}
+      >
+        <LogoSymbol
+          symbol={(crypto_info_data[id] as any)?.symbol}
+          name={(crypto_info_data[id] as any)?.name}
+          icon_w={10}
+          icon_h={10}
+          icon_src={(crypto_info_data[id] as any)?.logo}
+        />
+      </Box>
     );
-  };
+  });
 
   return (
     error_message !== '' 
@@ -108,9 +104,9 @@ const CryptoListScreen: FC = () => {
         </Center>
       </View>
       : 
-      <View>
-        <CryptoList />
-      </View>
+      <ScrollView>
+        {Cards}
+      </ScrollView>
   );
 };
 
