@@ -5,7 +5,7 @@ export async function getPrice(
   id_list: number[],
 ) {
   const api_url = Const.COINMARKETCAP.BASE_URL + Const.COINMARKETCAP.ENDPOINT.PRICE + `?id=${id_list.join(',')}`;
-  console.log(api_url);
+
   const res = await fetch(api_url, {
     method: 'GET',
     headers: {

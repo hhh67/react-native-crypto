@@ -22,5 +22,6 @@ export async function getMap (
   });
   
   const json = await res.json();
+
   return json;
 }
