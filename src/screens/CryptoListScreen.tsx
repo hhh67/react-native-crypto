@@ -1,8 +1,9 @@
 import { Box, Center, ScrollView } from 'native-base';
 import React, { FC, useState } from 'react';
 import { useEffect } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, TouchableHighlight } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIcon from '../components/atoms/LogoIcon';
 import LogoSymbol from '../components/molecules/LogoSymbol';
@@ -79,13 +80,20 @@ const CryptoListScreen: FC = () => {
   const Cards: any[] = [];
   id_list.forEach((id: any) => {
     Cards.push(
-      <LogoCard
-        crypto_info={crypto_info_data[id]}
-        crypto_price={crypto_price_data[id]}
-        icon_w={10}
-        icon_h={10}
-        margin={6}
-      />
+      <TouchableHighlight
+        underlayColor={'#effafa'}
+        onPress={() => {
+          console.log(1);
+        }}
+      >
+        <LogoCard
+          crypto_info={crypto_info_data[id]}
+          crypto_price={crypto_price_data[id]}
+          icon_w={10}
+          icon_h={10}
+          margin={4}
+        />
+      </TouchableHighlight>
     );
   });
 
@@ -100,9 +108,11 @@ const CryptoListScreen: FC = () => {
         </Center>
       </View>
       :
-      <ScrollView>
-        {Cards}
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView>
+          {Cards}
+        </ScrollView>
+      </SafeAreaView>
   );
 };
 

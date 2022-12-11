@@ -26,8 +26,8 @@ const LogoSymbol: FC<Props> = ({
       alignItems={'center'}
       marginTop={margin}
       marginBottom={margin}
-      marginLeft={margin}
-      marginRight={margin}
+      marginLeft={margin * 1.5}
+      marginRight={margin * 1.5}
       flex={1}
     >
       <Box>

@@ -21,6 +21,7 @@ const LogoCard: FC<Props> =  ({
   return (
     <Box
       borderBottomWidth={0.2}
+      borderBottomColor={'#999'}
     >
       <LogoSymbol
         crypto_info={crypto_info}
