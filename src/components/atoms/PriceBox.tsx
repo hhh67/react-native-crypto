@@ -13,21 +13,24 @@ const PriceBox: FC<Props> = ({
 }) => {
   const price = Number(crypto_price?.quote.JPY.price);
   const display_price = 
-    Boolean(price) === true ? 
+    Boolean(price) ? 
       '¥ ' + (price > 9999 ?
         Number(price.toFixed()).toLocaleString()
         : price.toFixed(2))
       : '';
 
   const percent_change_24h = Number(crypto_price?.quote.JPY.percent_change_24h);
-  let display_percent_change_24h = percent_change_24h.toFixed(2);
+  let display_percent_change_24h = '';
   let percent_color = '#2d4';
-  if (percent_change_24h < 0) {
-    percent_color = '#f00';
-  } else {
-    display_percent_change_24h = '+' + display_percent_change_24h;
+  if (Boolean(price)) {
+    display_percent_change_24h = percent_change_24h.toFixed(2);
+    if (percent_change_24h < 0) {
+      percent_color = '#f00';
+    } else {
+      display_percent_change_24h = '+' + display_percent_change_24h;
+    }
+    display_percent_change_24h += '%';
   }
-  display_percent_change_24h += '%';
   
   return (
     <React.Fragment>
