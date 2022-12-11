@@ -60,7 +60,7 @@ const CryptoListScreen: FC = () => {
   }, []);
     
   let id_list: number[] = [];
-  crypto_map_data.forEach(function(data: any) {
+  crypto_map_data.forEach((data: any) => {
     id_list.push(data.id);
   });
 
@@ -77,7 +77,7 @@ const CryptoListScreen: FC = () => {
   ]);
 
   const Cards: any[] = [];
-  id_list.forEach(function (id: any) {
+  id_list.forEach((id: any) => {
     Cards.push(
       <Box
         marginBottom={8}
@@ -103,7 +103,7 @@ const CryptoListScreen: FC = () => {
           </Text>
         </Center>
       </View>
-      : 
+      :
       <ScrollView>
         {Cards}
       </ScrollView>
