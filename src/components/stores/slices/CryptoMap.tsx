@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getMap } from '../../../api/CoinMarketCapApi/CryptoCurrency/getMap';
-import { ConsoleGreen, ConsoleYellow } from '../../../const';
 
 export const CryptoMapSlice = createSlice({
   name: 'crypto_map',
@@ -31,7 +30,6 @@ export const CryptoMapSlice = createSlice({
 
       state.crypto_map_status = action.payload.status;
       state.crypto_map_data = action.payload.data;
-      ConsoleGreen(JSON.stringify(state.crypto_map_data));
     }
   }
 });

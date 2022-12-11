@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getPrice } from '../../../api/CoinMarketCapApi/CryptoCurrency/getPrice';
-import { ConsoleYellow } from '../../../const';
+import { ConsoleRed } from '../../../const';
 
 export const CryptoPriceSlice = createSlice({
   name: 'crypto_price',

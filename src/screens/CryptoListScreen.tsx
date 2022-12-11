@@ -6,11 +6,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIcon from '../components/atoms/LogoIcon';
 import LogoSymbol from '../components/molecules/LogoSymbol';
+import LogoCard from '../components/organisms/LogoCard';
 import { fetchCryptoInfo } from '../components/stores/slices/CryptoInfo';
 import { fetchCryptoMap } from '../components/stores/slices/CryptoMap';
 import { fetchCryptoPrice } from '../components/stores/slices/CryptoPrice';
 import { AppDispatch, RootState } from '../components/stores/store';
-import { ConsoleBlue, ConsoleCyan, ConsoleGreen, ConsoleMagenta, ConsoleRed, ConsoleYellow } from '../const';
+import { ConsoleYellow } from '../const';
 
 const styles = StyleSheet.create({
   errorContentView: {
@@ -65,7 +66,6 @@ const CryptoListScreen: FC = () => {
   });
 
   useEffect(() => {
-    ConsoleBlue(id_list);
     const API = async () => {
       await dispatch(fetchCryptoPrice(id_list));
       await dispatch(fetchCryptoInfo(id_list));
@@ -79,17 +79,13 @@ const CryptoListScreen: FC = () => {
   const Cards: any[] = [];
   id_list.forEach((id: any) => {
     Cards.push(
-      <Box
-        marginBottom={8}
-      >
-        <LogoSymbol
-          symbol={(crypto_info_data[id] as any)?.symbol}
-          name={(crypto_info_data[id] as any)?.name}
-          icon_w={10}
-          icon_h={10}
-          icon_src={(crypto_info_data[id] as any)?.logo}
-        />
-      </Box>
+      <LogoCard
+        crypto_info={crypto_info_data[id]}
+        crypto_price={crypto_price_data[id]}
+        icon_w={10}
+        icon_h={10}
+        margin={6}
+      />
     );
   });
 
