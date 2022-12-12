@@ -3,10 +3,8 @@ import React, { FC, useState } from 'react';
 import { useEffect } from 'react';
 import { Dimensions, TouchableHighlight } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import LogoIcon from '../components/atoms/LogoIcon';
-import LogoSymbol from '../components/molecules/LogoSymbol';
+import FocusedCrypto from '../components/organisms/FocusedCrypto';
 import LogoCard from '../components/organisms/LogoCard';
 import { fetchCryptoInfo } from '../components/stores/slices/CryptoInfo';
 import { fetchCryptoMap } from '../components/stores/slices/CryptoMap';
@@ -77,13 +75,16 @@ const CryptoListScreen: FC = () => {
     id_list.length
   ]);
 
+  const [focused_info, setFocusedInfo] = useState(null);
+  const [focused_price, setFocusedPrice] = useState(null);
   const Cards: any[] = [];
-  id_list.forEach((id: any) => {
+  id_list.forEach((id: any, key: number) => {
     Cards.push(
       <TouchableHighlight
         underlayColor={'#effafa'}
         onPress={() => {
-          console.log(1);
+          setFocusedInfo(crypto_info_data[id]);
+          setFocusedPrice(crypto_price_data[id]);
         }}
       >
         <LogoCard
@@ -96,7 +97,7 @@ const CryptoListScreen: FC = () => {
       </TouchableHighlight>
     );
   });
-
+  
   return (
     error_message !== '' 
       ? 
@@ -108,11 +109,33 @@ const CryptoListScreen: FC = () => {
         </Center>
       </View>
       :
-      <SafeAreaView>
-        <ScrollView>
-          {Cards}
-        </ScrollView>
-      </SafeAreaView>
+      <View
+        style={{
+          justifyContent: 'center',
+          height: Dimensions.get('window').height * 0.9,
+        }}
+      >
+        <Box
+          h={'45%'}
+        >
+          <FocusedCrypto
+            focused_info={focused_info}
+            focused_price={focused_price}
+          />
+        </Box>
+        <Box
+          h={'55%'}
+          borderTopWidth={1}
+          borderTopColor={'#ccd'}
+          borderBottomWidth={1}
+          borderBottomColor={'#ccd'}
+        >
+          <ScrollView
+          >
+            {Cards}
+          </ScrollView>
+        </Box>
+      </View>
   );
 };
 

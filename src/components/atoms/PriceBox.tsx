@@ -1,8 +1,7 @@
-import { Box, HStack } from 'native-base';
+import { Box } from 'native-base';
 import React from 'react';
 import { FC } from 'react';
 import { Text } from 'react-native';
-import { ConsoleGreen } from '../../const';
 
 interface Props {
   crypto_price: any,
@@ -11,7 +10,7 @@ interface Props {
 const PriceBox: FC<Props> = ({
   crypto_price,
 }) => {
-  const price = Number(crypto_price?.quote.JPY.price);
+  const price = crypto_price?.quote.JPY.price;
   const display_price = 
     Boolean(price) ? 
       '¥ ' + (price > 9999 ?
@@ -19,7 +18,7 @@ const PriceBox: FC<Props> = ({
         : price.toFixed(2))
       : '';
 
-  const percent_change_24h = Number(crypto_price?.quote.JPY.percent_change_24h);
+  const percent_change_24h = crypto_price?.quote.JPY.percent_change_24h;
   let display_percent_change_24h = '';
   let percent_color = '#2d4';
   if (Boolean(price)) {
